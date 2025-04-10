@@ -1,0 +1,28 @@
+name: example-app-2
+replicaCount: 2
+serviceAccountName: default
+
+deployment:
+  image: aimvector/python
+  tag: "1.0.4"
+  port: 5000
+  resources:
+    requests:
+      memory: "50Mi"
+      cpu: "10m"
+    limits:
+      memory: "1024Mi"
+      cpu: "1"
+
+secret:
+  appSecret: "s3cr3t-value"
+
+ingress:
+  enabled: true
+  className: nginx
+  host: example-app-2.local
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  tls: false
+  tlsSecret: example-app-2-tls
+
